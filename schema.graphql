@@ -1,3 +1,13 @@
+type Stats @entity {
+  id: ID!
+  "Qantity of owners"
+  OwnersCount: BigInt
+  "Qantity of rarities"
+  RaritiesCount: BigInt
+  "Qantity of transfers"
+  TranfersCount: BigInt
+}
+
 type Rarity @entity {
   "Rarity"
   id: ID!
@@ -27,13 +37,4 @@ type Owner  @entity {
   Rarities:[Rarity!] @derivedFrom(field: "Owner")
 }
 
-type Stats @entity {
-  id: ID!
-  "Qantity of owners"
-  OwnersCount: BigInt
-  "Qantity of rarities"
-  RaritiesCount: BigInt
-  "Qantity of transfers"
-  TranfersCount: BigInt
-}
 

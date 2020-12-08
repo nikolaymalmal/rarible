@@ -45,6 +45,7 @@ export function handleTransferSingle(event: TransferSingle): void {
   tr.save()
 
   rar.Owner=newo.id
+  rar.save()
 
 }
 

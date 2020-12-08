@@ -12,6 +12,88 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
+export class Stats extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Stats entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Stats entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Stats", id.toString(), this);
+  }
+
+  static load(id: string): Stats | null {
+    return store.get("Stats", id) as Stats | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get OwnersCount(): BigInt | null {
+    let value = this.get("OwnersCount");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set OwnersCount(value: BigInt | null) {
+    if (value === null) {
+      this.unset("OwnersCount");
+    } else {
+      this.set("OwnersCount", Value.fromBigInt(value as BigInt));
+    }
+  }
+
+  get RaritiesCount(): BigInt | null {
+    let value = this.get("RaritiesCount");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set RaritiesCount(value: BigInt | null) {
+    if (value === null) {
+      this.unset("RaritiesCount");
+    } else {
+      this.set("RaritiesCount", Value.fromBigInt(value as BigInt));
+    }
+  }
+
+  get TranfersCount(): BigInt | null {
+    let value = this.get("TranfersCount");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set TranfersCount(value: BigInt | null) {
+    if (value === null) {
+      this.unset("TranfersCount");
+    } else {
+      this.set("TranfersCount", Value.fromBigInt(value as BigInt));
+    }
+  }
+}
+
 export class Rarity extends Entity {
   constructor(id: string) {
     super();
@@ -220,88 +302,6 @@ export class Owner extends Entity {
       this.unset("Rarities");
     } else {
       this.set("Rarities", Value.fromStringArray(value as Array<string>));
-    }
-  }
-}
-
-export class Stats extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id !== null, "Cannot save Stats entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save Stats entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("Stats", id.toString(), this);
-  }
-
-  static load(id: string): Stats | null {
-    return store.get("Stats", id) as Stats | null;
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get OwnersCount(): BigInt | null {
-    let value = this.get("OwnersCount");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set OwnersCount(value: BigInt | null) {
-    if (value === null) {
-      this.unset("OwnersCount");
-    } else {
-      this.set("OwnersCount", Value.fromBigInt(value as BigInt));
-    }
-  }
-
-  get RaritiesCount(): BigInt | null {
-    let value = this.get("RaritiesCount");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set RaritiesCount(value: BigInt | null) {
-    if (value === null) {
-      this.unset("RaritiesCount");
-    } else {
-      this.set("RaritiesCount", Value.fromBigInt(value as BigInt));
-    }
-  }
-
-  get TranfersCount(): BigInt | null {
-    let value = this.get("TranfersCount");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set TranfersCount(value: BigInt | null) {
-    if (value === null) {
-      this.unset("TranfersCount");
-    } else {
-      this.set("TranfersCount", Value.fromBigInt(value as BigInt));
     }
   }
 }
