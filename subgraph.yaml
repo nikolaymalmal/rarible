@@ -1,0 +1,45 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Contract
+    network: mainnet
+    source:
+      address: "0xd07dc4262BCDbf85190C01c996b4C06a461d2430"
+      abi: Contract
+      startBlock: 10147630
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ApprovalForAll
+        - OwnershipTransferred
+        - SecondarySaleFees
+        - SignerAdded
+        - SignerRemoved
+        - TransferBatch
+        - TransferSingle
+        - URI
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: SecondarySaleFees(uint256,address[],uint256[])
+          handler: handleSecondarySaleFees
+        - event: SignerAdded(indexed address)
+          handler: handleSignerAdded
+        - event: SignerRemoved(indexed address)
+          handler: handleSignerRemoved
+        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+          handler: handleTransferBatch
+        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleTransferSingle
+        - event: URI(string,indexed uint256)
+          handler: handleURI
+      file: ./src/mapping.ts

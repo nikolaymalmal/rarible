@@ -1,0 +1,39 @@
+type Rarity @entity {
+  "Rarity"
+  id: ID!
+  "Link to Rarity description"
+  Link: String
+  "Rarities owner"
+  Owner: Owner
+}
+
+type Transfer @entity {
+  "Transfer transaction hash + '-'+ rarity id"
+  id: ID!
+  "Rarity"
+  Rarity: Rarity
+  "Previous owner"
+  PreviousOwner: Owner
+  "New owner"
+  NewOwner: Owner
+  "Operator"
+  Operator: Bytes
+}
+
+type Owner  @entity {
+  "Owner address"
+  id: ID!
+  "Users auctions"
+  Rarities:[Rarity!] @derivedFrom(field: "Owner")
+}
+
+type Stats @entity {
+  id: ID!
+  "Qantity of owners"
+  OwnersCount: BigInt
+  "Qantity of rarities"
+  RaritiesCount: BigInt
+  "Qantity of transfers"
+  TranfersCount: BigInt
+}
+
